@@ -82,18 +82,17 @@ with st.form("DailyAccounts_Form"):
         cleaning, tea_snacks, food, other_expenses = (st.number_input(label, min_value=0) for label in 
                                                       ['House Keeping(Sudakar)', 'Tea & Snacks', 'Food', 'Other Expenses'])
         other_expense_name = st.selectbox("What Other Expense?", ["Other Expenses", "Flower", "News Paper", "Corporation Cleaning"])
-        total_daily_expense = cleaning + tea_snacks + food + other_expenses
+        total_daily_expense = cleaning + tea_snacks + food + other_expenses + sum(employee.advance for employee in employees)
         st.number_input("Total Expense: ", min_value=0, value=total_daily_expense, disabled=True)
     
     # Submit Button
     submitted = st.form_submit_button("Save")
     if submitted:
-        total_profit, total_expenses = calculate_totals(employees, total_daily_expense)
         st.success("Data Saved Successfully!")
-        st.balloons()
+        #st.balloons()
         st.markdown("## Save Data")
         st.write("Date:", date.strftime("%Y-%m-%d"))
         st.write("Opening Cash:", opening_cash)
         st.write("Total Cash from Denominations:", total_cash)
-        st.write("Total Profit:", total_profit)
-        st.write("Total Expenses:", total_expenses)
+        st.write("Total Expenses:", total_daily_expense)
+        st.write("Purchase Shop", total_daily_expense)
